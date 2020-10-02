@@ -1,1 +1,1 @@
-{"version":3,"file":"schemaNames.js","sourceRoot":"","sources":["../../src/config/schemaNames.ts"],"names":[],"mappings":";;;AAAa,QAAA,WAAW,GAAG;IACvB,aAAa,EAAE,eAAe;CAC/B,CAAA"}
+{"version":3,"file":"schemaNames.js","sourceRoot":"","sources":["../../src/config/schemaNames.ts"],"names":[],"mappings":";;;AAAa,QAAA,WAAW,GAAG;IACvB,aAAa,EAAE,eAAe;IAC9B,OAAO,EAAC,SAAS;CAClB,CAAA"}

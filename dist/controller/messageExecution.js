@@ -10,7 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.printMessage = exports.executeMessage = void 0;
+const history_1 = require("./history");
 const searchQuery_1 = require("./searchQuery");
+const history_2 = require("../model/history");
 exports.executeMessage = (msg) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (msg.content === 'hi') {
@@ -21,11 +23,27 @@ exports.executeMessage = (msg) => __awaiter(void 0, void 0, void 0, function* ()
             if (!searchText) {
                 return;
             }
+            const user = 'testing';
+            const userQuery = yield history_2.History.findOneAndUpdate({ query: searchText, user }, { $set: { "updatedAt": new Date() } }, { useFindAndModify: false });
+            if (!userQuery) {
+                const saveHistory = new history_2.History();
+                saveHistory.query = searchText;
+                saveHistory.user = user;
+                saveHistory.save();
+            }
             const searchResponse = yield searchQuery_1.searchQuery(searchText);
             if (!searchResponse || searchResponse == '') {
                 return;
             }
             msg.channel.send(searchResponse);
+        }
+        else if (msg.content.startsWith('!recent')) {
+            const historyData = yield history_1.getHistory(msg);
+            if (!historyData || historyData == '') {
+                console.log("History is ", historyData);
+                return;
+            }
+            msg.channel.send(historyData);
         }
     }
     catch (error) {

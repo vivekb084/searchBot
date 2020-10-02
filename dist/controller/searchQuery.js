@@ -20,7 +20,6 @@ exports.searchQuery = (query) => __awaiter(void 0, void 0, void 0, function* () 
         const saveResult = new searchResult_1.SearchResult();
         let searchResult = yield searchQueryOnGoogle(query);
         if (!searchResult) {
-            console.log("Inside empty search resose");
             return '';
         }
         saveResult.query = query.toLowerCase();

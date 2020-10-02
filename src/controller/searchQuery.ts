@@ -14,7 +14,6 @@ export const searchQuery = async (query:string)=>{
         let searchResult = await searchQueryOnGoogle(query);
         
         if(!searchResult){
-            console.log("Inside empty search resose")
             return ''
         }
     
