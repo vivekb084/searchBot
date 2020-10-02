@@ -1,5 +1,4 @@
 import { searchQuery } from './searchQuery';
-import { SearchResult } from '../model/searchResult'
 
 export const executeMessage = async(msg:any) => {
     try {
@@ -8,24 +7,17 @@ export const executeMessage = async(msg:any) => {
           } else if (msg.content.startsWith('!google')) {
       
             const searchText = (msg.content.replace("!google", "")).trim().toLowerCase();
-            const dbSearchResult = await SearchResult.findOne({query:searchText},{result:1,_id:0}); 
-      
-            //Check If query Exist in DB      
-      
-            if(dbSearchResult){ 
-              msg.channel.send(dbSearchResult.result);
-              return ;
+
+            if(!searchText){
+                return ;
             }
-            let searchResponse =  await searchQuery(searchText);
-            if(!searchResponse){
-              return ;
-            }
-            const saveResult = new SearchResult();
-      
-            saveResult.query=searchText.toLowerCase();
-            saveResult.result = searchResponse
-      
-            saveResult.save();
+
+            const searchResponse = await searchQuery(searchText);
+
+            if(!searchResponse || searchResponse==''){
+                return ;
+              }
+
             msg.channel.send(searchResponse);
       
           }

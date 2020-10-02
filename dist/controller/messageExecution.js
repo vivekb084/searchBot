@@ -11,30 +11,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.printMessage = exports.executeMessage = void 0;
 const searchQuery_1 = require("./searchQuery");
-const searchResult_1 = require("../model/searchResult");
 exports.executeMessage = (msg) => __awaiter(void 0, void 0, void 0, function* () {
-    if (msg.content === 'hi') {
-        msg.channel.send('hey');
+    try {
+        if (msg.content === 'hi') {
+            msg.channel.send('hey');
+        }
+        else if (msg.content.startsWith('!google')) {
+            const searchText = (msg.content.replace("!google", "")).trim().toLowerCase();
+            if (!searchText) {
+                return;
+            }
+            const searchResponse = yield searchQuery_1.searchQuery(searchText);
+            if (!searchResponse || searchResponse == '') {
+                return;
+            }
+            msg.channel.send(searchResponse);
+        }
     }
-    else if (msg.content.startsWith('!google')) {
-        const searchText = (msg.content.replace("!google", "")).trim().toLowerCase();
-        const dbSearchResult = yield searchResult_1.SearchResult.findOne({ query: searchText }, { result: 1, _id: 0 });
-        if (dbSearchResult) {
-            msg.channel.send(dbSearchResult.result);
-            return;
-        }
-        let searchResponse = yield searchQuery_1.searchQuery(searchText);
-        if (!searchResponse) {
-            return;
-        }
-        const saveResult = new searchResult_1.SearchResult();
-        saveResult.query = searchText.toLowerCase();
-        saveResult.result = searchResponse;
-        saveResult.save();
-        msg.channel.send(searchResponse);
+    catch (error) {
+        console.log("Error in Executing Message");
     }
 });
 exports.printMessage = () => {
-    console.info("Bot Connected Successfully");
+    try {
+        console.info("Bot Connected Successfully");
+    }
+    catch (error) {
+        console.info("Error in print Message");
+    }
 };
 //# sourceMappingURL=messageExecution.js.map
