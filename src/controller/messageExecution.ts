@@ -36,7 +36,6 @@ export const executeMessage = async(msg:any) => {
           else if (msg.content.startsWith('!recent')){
              const historyData = await getHistory(msg);
              if(!historyData || historyData==''){
-                 console.log("History is ",historyData)
                  return ;
              }
              msg.channel.send(historyData);
