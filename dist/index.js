@@ -24,27 +24,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
+const mongoose_1 = require("mongoose");
 const discord_js_1 = __importDefault(require("discord.js"));
 const envVariable_1 = require("./config/envVariable");
+const messageExecution_1 = require("./controller/messageExecution");
 const bot = new discord_js_1.default.Client();
 const TOKEN = envVariable_1.envVariable.TOKEN;
+mongoose_1.connect(envVariable_1.envVariable.MONGO_URL, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }); //To Connect MongoDB
 bot.login(TOKEN);
-bot.on('ready', () => {
-    console.info(`Logged in as ${bot.user.tag}!`);
-});
-bot.on('message', msg => {
-    if (msg.content === 'hi') {
-        // msg.reply('hey');
-        msg.channel.send('hey');
-    }
-    else if (msg.content.startsWith('!kick')) {
-        if (msg.mentions.users.size) {
-            const taggedUser = msg.mentions.users.first();
-            msg.channel.send(`You wanted to kick: ${taggedUser.username}`);
-        }
-        else {
-            msg.reply('Please tag a valid user!');
-        }
-    }
-});
+bot.on('ready', messageExecution_1.printMessage);
+bot.on('message', messageExecution_1.executeMessage);
 //# sourceMappingURL=index.js.map

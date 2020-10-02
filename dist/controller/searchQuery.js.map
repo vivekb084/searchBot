@@ -1,0 +1,1 @@
+{"version":3,"file":"searchQuery.js","sourceRoot":"","sources":["../../src/controller/searchQuery.ts"],"names":[],"mappings":";;;AACa,QAAA,WAAW,GAAG,CAAC,KAAY,EAAC,EAAE;IACvC,OAAO,IAAI,OAAO,CAAC,CAAC,OAAO,EAAC,MAAM,EAAE,EAAE;QACnC,OAAO,CAAC,CAAC,mBAAmB,CAAC,CAAC,CAAC;IAClC,CAAC,CAAC,CAAC;AACP,CAAC,CAAA"}
