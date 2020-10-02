@@ -4,7 +4,6 @@ import { History } from "../model/history";
 
 export const executeMessage = async(msg:any) => {
     try {
-        
         if (msg.content === 'hi') {
             msg.channel.send('hey');
           } else if (msg.content.startsWith('!google')) {
@@ -14,7 +13,7 @@ export const executeMessage = async(msg:any) => {
             if(!searchText){
                 return ;
             }
-            const user:string = 'testing'
+            const user:string = msg.author.id
 
             const userQuery = await History.findOneAndUpdate({query:searchText,user},{$set:{"updatedAt":new Date()}},{useFindAndModify: false})
 

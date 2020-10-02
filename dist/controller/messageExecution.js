@@ -23,7 +23,7 @@ exports.executeMessage = (msg) => __awaiter(void 0, void 0, void 0, function* ()
             if (!searchText) {
                 return;
             }
-            const user = 'testing';
+            const user = msg.author.id;
             const userQuery = yield history_2.History.findOneAndUpdate({ query: searchText, user }, { $set: { "updatedAt": new Date() } }, { useFindAndModify: false });
             if (!userQuery) {
                 const saveHistory = new history_2.History();
