@@ -39,7 +39,6 @@ exports.searchQuery = (query) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 const searchQueryOnGoogle = (query) => {
-    console.log("Inside searchin gogle");
     return new Promise((resolve, reject) => {
         const params = {
             access_key: envVariable_1.envVariable.SERP_API_KEY,
