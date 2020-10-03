@@ -1,4 +1,7 @@
 import { SearchResult } from "../model/searchResult";
+import axios from 'axios'
+import { envVariable } from '../config/envVariable'
+import { SERP_URL } from '../constants/apiUrl'
 
 export const searchQuery = async (query:string)=>{
     try {
@@ -33,6 +36,22 @@ export const searchQuery = async (query:string)=>{
 
 const searchQueryOnGoogle = (query:string)=>{
     return new Promise((resolve,reject) =>{
-        resolve(['test2','test2','test3']);
+        const params = {
+            access_key: envVariable.SERP_API_KEY,
+            query
+        }
+        let resultArray = []
+        axios.get(SERP_URL, {params})
+        .then(response => {
+            const apiResponse = response.data;
+            for(let i=0;i<apiResponse.organic_results.length && i<5;i++){
+                let resultString = apiResponse.organic_results[i].title + ' : '+ apiResponse.organic_results[i].url;
+                resultArray.push(resultString)
+            }
+            resolve(resultArray)
+        }).catch(error => {
+            console.log(error);
+            reject(error)
+        });
     });
 }

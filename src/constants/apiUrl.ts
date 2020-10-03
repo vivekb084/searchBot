@@ -1,0 +1,1 @@
+export const SERP_URL = 'http://api.serpstack.com/search'

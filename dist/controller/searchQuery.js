@@ -8,9 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchQuery = void 0;
 const searchResult_1 = require("../model/searchResult");
+const axios_1 = __importDefault(require("axios"));
+const envVariable_1 = require("../config/envVariable");
+const apiUrl_1 = require("../constants/apiUrl");
 exports.searchQuery = (query) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const dbSearchResult = yield searchResult_1.SearchResult.findOne({ query }, { result: 1, _id: 0 });
@@ -33,8 +39,25 @@ exports.searchQuery = (query) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 const searchQueryOnGoogle = (query) => {
+    console.log("Inside searchin gogle");
     return new Promise((resolve, reject) => {
-        resolve(['test2', 'test2', 'test3']);
+        const params = {
+            access_key: envVariable_1.envVariable.SERP_API_KEY,
+            query
+        };
+        let resultArray = [];
+        axios_1.default.get(apiUrl_1.SERP_URL, { params })
+            .then(response => {
+            const apiResponse = response.data;
+            for (let i = 0; i < apiResponse.organic_results.length && i < 5; i++) {
+                let resultString = apiResponse.organic_results[i].title + ' : ' + apiResponse.organic_results[i].url;
+                resultArray.push(resultString);
+            }
+            resolve(resultArray);
+        }).catch(error => {
+            console.log(error);
+            reject(error);
+        });
     });
 };
 //# sourceMappingURL=searchQuery.js.map
