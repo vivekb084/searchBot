@@ -8,7 +8,8 @@ exports.getHistory = (message) => {
             let historyArray = [];
             const query = (message.content.replace("!recent", "")).trim().toLowerCase();
             const regexQuery = '.*' + query + '.*';
-            history_1.History.find({ query: new RegExp('^' + regexQuery + '$', "i") }).sort({ updatedAt: -1 }).then(result => {
+            const user = message.author.id;
+            history_1.History.find({ query: new RegExp('^' + regexQuery + '$', "i"), user }).sort({ updatedAt: -1 }).then(result => {
                 for (let i = 0; i < result.length; i++) {
                     historyArray.push(result[i].query);
                 }

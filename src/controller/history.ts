@@ -6,8 +6,9 @@ export const getHistory = (message:any)=>{
             let historyArray = []
             const query = (message.content.replace("!recent", "")).trim().toLowerCase();
             const regexQuery:string =  '.*'+query+'.*' 
+            const user:string = message.author.id
 
-            History.find({query:new RegExp('^'+regexQuery+'$', "i")}).sort({updatedAt:-1}).then(result=>{
+            History.find({query:new RegExp('^'+regexQuery+'$', "i"),user}).sort({updatedAt:-1}).then(result=>{
                 for(let i=0;i<result.length;i++){
                     historyArray.push(result[i].query)
                 }

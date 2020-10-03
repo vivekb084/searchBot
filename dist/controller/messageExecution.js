@@ -40,7 +40,6 @@ exports.executeMessage = (msg) => __awaiter(void 0, void 0, void 0, function* ()
         else if (msg.content.startsWith('!recent')) {
             const historyData = yield history_1.getHistory(msg);
             if (!historyData || historyData == '') {
-                console.log("History is ", historyData);
                 return;
             }
             msg.channel.send(historyData);
