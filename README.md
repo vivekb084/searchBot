@@ -18,3 +18,8 @@ npm start
 # NOTE
 
 For searching on google we are using trial version of library that is limited to 50 requests per month
+
+
+# INVITE LINK
+
+https://discord.gg/rN4SJ7U
