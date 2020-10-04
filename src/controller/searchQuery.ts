@@ -3,6 +3,13 @@ import axios from 'axios'
 import { envVariable } from '../config/envVariable'
 import { SERP_URL } from '../constants/apiUrl'
 
+
+/**
+ * Get Top 5 google search results if not found query in db
+ * @param {string} query Query to be searched.
+ * return string Array
+ */
+
 export const searchQuery = async (query:string)=>{
     try {
 
@@ -33,6 +40,12 @@ export const searchQuery = async (query:string)=>{
     }
 }
 
+
+/**
+ * Get Top 5 google search results if not found query in db
+ * @param {string} query Query to be searched.
+ * return string Array
+ */
 
 const searchQueryOnGoogle = (query:string)=>{
     return new Promise((resolve,reject) =>{

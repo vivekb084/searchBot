@@ -13,9 +13,16 @@ exports.printMessage = exports.executeMessage = void 0;
 const history_1 = require("./history");
 const searchQuery_1 = require("./searchQuery");
 const history_2 = require("../model/history");
+/**
+ * Reply query
+ * 1. Reply hey to hi
+ * 2. search top 5 google result if query starts with !google
+ * 3. Get user search history of matching query if query starts with !recent
+ * @param {Object} message Query to be searched.
+ */
 exports.executeMessage = (msg) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        if (msg.content === 'hi') {
+        if (msg.content.toLowerCase() === 'hi') {
             msg.channel.send('hey');
         }
         else if (msg.content.startsWith('!google')) {
@@ -24,21 +31,21 @@ exports.executeMessage = (msg) => __awaiter(void 0, void 0, void 0, function* ()
                 return;
             }
             const user = msg.author.id;
-            const userQuery = yield history_2.History.findOneAndUpdate({ query: searchText, user }, { $set: { "updatedAt": new Date() } }, { useFindAndModify: false });
-            if (!userQuery) {
+            const userQuery = yield history_2.History.findOneAndUpdate({ query: searchText, user }, { $set: { "updatedAt": new Date() } }, { useFindAndModify: false }); //Check if user previously search for same query if yes update query timestamp
+            if (!userQuery) { //if user not seach for same query store query in history
                 const saveHistory = new history_2.History();
                 saveHistory.query = searchText;
                 saveHistory.user = user;
                 saveHistory.save();
             }
-            const searchResponse = yield searchQuery_1.searchQuery(searchText);
+            const searchResponse = yield searchQuery_1.searchQuery(searchText); //Get google search result of query
             if (!searchResponse || searchResponse == '') {
                 return;
             }
             msg.channel.send(searchResponse);
         }
         else if (msg.content.startsWith('!recent')) {
-            const historyData = yield history_1.getHistory(msg);
+            const historyData = yield history_1.getHistory(msg); //Get User Specific history that match query string
             if (!historyData || historyData == '') {
                 return;
             }

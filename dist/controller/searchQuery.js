@@ -17,6 +17,11 @@ const searchResult_1 = require("../model/searchResult");
 const axios_1 = __importDefault(require("axios"));
 const envVariable_1 = require("../config/envVariable");
 const apiUrl_1 = require("../constants/apiUrl");
+/**
+ * Get Top 5 google search results if not found query in db
+ * @param {string} query Query to be searched.
+ * return string Array
+ */
 exports.searchQuery = (query) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const dbSearchResult = yield searchResult_1.SearchResult.findOne({ query }, { result: 1, _id: 0 });
@@ -38,6 +43,11 @@ exports.searchQuery = (query) => __awaiter(void 0, void 0, void 0, function* () 
         return '';
     }
 });
+/**
+ * Get Top 5 google search results if not found query in db
+ * @param {string} query Query to be searched.
+ * return string Array
+ */
 const searchQueryOnGoogle = (query) => {
     return new Promise((resolve, reject) => {
         const params = {
